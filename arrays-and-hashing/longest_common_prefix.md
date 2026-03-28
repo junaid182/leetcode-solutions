@@ -15,16 +15,16 @@
 ```python
 class Solution:
     def longestCommonPrefix(self, strs: List[str]) -> str:
-        res = ""
+        res = []
 
         for i in range(len(strs[0])):
+            cur_char = strs[0][i]
             for s in strs:
-                if i == len(s) or s[i] != strs[0][i]:
-                    return res
+                if i >= len(s) or s[i] != cur_char:
+                    return "".join(res)
+            res.append(cur_char)
 
-            res += strs[0][i]
-
-        return res
+        return "".join(res)
 ```
 
 ## Complexity
