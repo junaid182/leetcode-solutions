@@ -16,9 +16,9 @@
 class Solution:
     def validPalindrome(self, s: str) -> bool:
 
-        def is_palindrome_range(l, r):
-            while l < r:
-                if s[l].lower() != s[r].lower():
+        def is_palindrome(l, r):
+            while l <= r:
+                if s[l] != s[r]:
                     return False
                 l += 1
                 r -= 1
@@ -26,9 +26,9 @@ class Solution:
 
         l, r = 0, len(s) - 1
 
-        while l < r:
-            if s[l].lower() != s[r].lower():
-                return is_palindrome_range(l + 1, r) or is_palindrome_range(l, r - 1)
+        while l <= r:
+            if s[l] != s[r]:
+                return is_palindrome(l + 1, r) or is_palindrome(l, r - 1)
             l += 1
             r -= 1
 
