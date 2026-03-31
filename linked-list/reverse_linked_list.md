@@ -15,14 +15,14 @@
 ```python
 class Solution:
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        cur = head
         prev = None
+        curr = head
 
-        while cur:
-            temp = cur.next
-            cur.next = prev
-            prev = cur
-            cur = temp
+        while curr:
+            temp = curr.next
+            curr.next = prev
+            prev = curr
+            curr = temp
 
         return prev
 ```
