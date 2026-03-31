@@ -17,20 +17,18 @@ class Solution:
     def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
         maxDia = 0
 
-        def height(node):
-            nonlocal maxDia
-
-            if not node:
+        def diameter(curr):
+            if not curr:
                 return 0
 
-            leftHeight = height(node.left)
-            rightHeight = height(node.right)
+            left = diameter(curr.left)
+            right = diameter(curr.right)
+            nonlocal maxDia
+            maxDia = max(maxDia, left + right)
 
-            maxDia = max(maxDia, leftHeight + rightHeight)
+            return 1 + max(left, right)
 
-            return 1 + max(leftHeight, rightHeight)
-
-        height(root)
+        diameter(root)
 
         return maxDia
 ```
