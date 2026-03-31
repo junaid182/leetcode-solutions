@@ -17,12 +17,13 @@ class Solution:
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         res = []
 
-        def inorder(root):
-            if not root:
+        def inorder(curr):
+            if not curr:
                 return
-            inorder(root.left)
-            res.append(root.val)
-            inorder(root.right)
+            inorder(curr.left)
+            nonlocal res
+            res.append(curr.val)
+            inorder(curr.right)
 
         inorder(root)
 
