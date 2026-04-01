@@ -15,17 +15,18 @@
 ```python
 class Solution:
     def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
-        window = set()
-        L = 0
+        i = 0
+        rangeSet = set()
 
-        for R in range(len(nums)):
-            if R - L > k:
-                window.remove(nums[L])
-                L += 1
+        for j in range(len(nums)):
+            if abs(i - j) > k:
+                rangeSet.remove(nums[j - k - 1])
+                i += 1
 
-            if nums[R] in window:
+            if nums[j] in rangeSet:
                 return True
-            window.add(nums[R])
+
+            rangeSet.add(nums[j])
 
         return False
 ```
