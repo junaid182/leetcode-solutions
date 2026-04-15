@@ -15,6 +15,7 @@
 ```python
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        res = []
         countHash = {}
         freq = [[] for i in range(len(nums) + 1)]
 
@@ -24,12 +25,11 @@ class Solution:
         for n, c in countHash.items():
             freq[c].append(n)
 
-        res = []
-        for f in range(len(freq) - 1, 0, -1):
-            for n in freq[f]:
+        for i in range(len(freq) - 1, 0, -1):
+            for n in freq[i]:
                 res.append(n)
-                if len(res) == k:
-                    return res
+            if len(res) == k:
+                return res
 ```
 
 ## Complexity
