@@ -13,19 +13,21 @@
 ```python
 class Solution:
     def maxArea(self, height: List[int]) -> int:
+        res = 0
         l, r = 0, len(height) - 1
-        maxArea = 0
 
         while l < r:
-            w = r - l
-            h = min(height[l], height[r])
-            maxArea = max(maxArea, w * h)
+            length = min(height[l], height[r])
+            width = r - l
+            area = length * width
+            res = max(res, area)
+
             if height[l] < height[r]:
                 l += 1
             else:
                 r -= 1
 
-        return maxArea
+        return res
 ```
 
 ## Complexity
