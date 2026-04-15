@@ -17,18 +17,19 @@ class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
         s1Hash = {}
         s2Hash = {}
-        l = 0
-
-        for c in s1:
-            s1Hash[c] = s1Hash.get(c, 0) + 1
+        for s in s1:
+            s1Hash[s] = s1Hash.get(s, 0) + 1
         
-        for r in range(len(s2)):
-            if r - l + 1 > len(s1):
-                s2Hash[s2[l]] -= 1
-                if s2Hash[s2[l]] == 0:
-                    s2Hash.pop(s2[l])
-                l += 1
-            s2Hash[s2[r]] = s2Hash.get(s2[r], 0) + 1
+        i = 0
+
+        for j in range(len(s2)):
+            if j - i + 1 > len(s1):
+                s2Hash[s2[i]] = s2Hash.get(s2[i], 0) - 1
+                if s2Hash[s2[i]] == 0:
+                    s2Hash.pop(s2[i])
+                i += 1
+
+            s2Hash[s2[j]] = s2Hash.get(s2[j], 0) + 1
 
             if s1Hash == s2Hash:
                 return True
