@@ -18,25 +18,28 @@ class Solution:
         res = []
         nums.sort()
 
-        for i, a in enumerate(nums):
-            if i > 0 and nums[i] == nums[i - 1]:
+        for a in range(len(nums) - 1):
+            if a > 0 and nums[a] == nums[a - 1]:
                 continue
 
-            l, r = i + 1, len(nums) - 1
+            b, c = a + 1, len(nums) - 1
 
-            while l < r:
-                threeSum = a + nums[l] + nums[r]
+            while b < c:
+                sum = nums[a] + nums[b] + nums[c]
 
-                if threeSum == 0:
-                    res.append([a, nums[l], nums[r]])
-                    l += 1
+                if sum == 0:
+                    res.append([nums[a], nums[b], nums[c]])
+                    b += 1
+                    c -= 1
 
-                    while l < r and nums[l] == nums[l - 1]:
-                        l += 1
-                elif threeSum > 0:
-                    r = r - 1
+                    while b < c and nums[b] == nums[b - 1]:
+                        b += 1
+                    while b < c and nums[c] == nums[c + 1]:
+                        c -= 1
+                elif sum < 0:
+                    b += 1
                 else:
-                    l = l + 1
+                    c -= 1
 
         return res
 ```
