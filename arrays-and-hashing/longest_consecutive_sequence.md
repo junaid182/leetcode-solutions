@@ -16,16 +16,20 @@
 class Solution:
     def longestConsecutive(self, nums: List[int]) -> int:
         numsSet = set(nums)
-        longest = 0
+        res = 0
 
         for n in numsSet:
             if n - 1 not in numsSet:
-                length = 0
-                while n + length in numsSet:
-                    length += 1
-                longest = max(longest, length)
+                cur = n
+                count = 1
 
-        return longest
+                while cur + 1 in numsSet:
+                    cur += 1
+                    count += 1
+
+                res = max(res, count)
+
+        return res
 ```
 
 ## Complexity
