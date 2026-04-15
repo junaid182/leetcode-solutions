@@ -14,14 +14,14 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
         i = 0
-        substringHash = set()
+        subStr = set()
         res = 0
 
         for j in range(len(s)):
-            while s[j] in substringHash:
-                substringHash.remove(s[i])
+            while s[j] in subStr:
+                subStr.remove(s[i])
                 i += 1
-            substringHash.add(s[j])
+            subStr.add(s[j])
             res = max(res, j - i + 1)
 
         return res
