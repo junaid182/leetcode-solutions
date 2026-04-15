@@ -17,22 +17,22 @@ class MinStack:
 
     def __init__(self):
         self.stack = []
-        self.minStack = []
+        self.minstack = []
 
     def push(self, val: int) -> None:
         self.stack.append(val)
-        minVal = min(val, self.minStack[-1] if self.minStack else val)
-        self.minStack.append(minVal)
+        minVal = min(val, self.minstack[-1] if self.minstack else val)
+        self.minstack.append(minVal)
 
     def pop(self) -> None:
         self.stack.pop()
-        self.minStack.pop()
+        self.minstack.pop()
 
     def top(self) -> int:
         return self.stack[-1]
 
     def getMin(self) -> int:
-        return self.minStack[-1]
+        return self.minstack[-1]
 ```
 
 ## Complexity
