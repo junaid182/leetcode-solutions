@@ -15,35 +15,31 @@
 ```python
 class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
-        ROWS, COLS = len(matrix), len(matrix[0])
-
-        top, bot = 0, ROWS - 1
+        top, bot = 0, len(matrix) - 1
+        row = 0
 
         while top <= bot:
-            Row = (top + bot) // 2
+            mid = (top + bot) // 2
 
-            if target < matrix[Row][0]:
-                bot = bot - 1
-            elif target > matrix[Row][-1]:
-                top = top + 1
-            else:
+            if target >= matrix[mid][0] and target <= matrix[mid][-1]:
+                row = mid
                 break
-
-        if not (top <= bot):
-            return False
-
-        Row = (top + bot) // 2
-        l, r = 0, COLS - 1
-
-        while l <= r:
-            m = (l + r) // 2
-
-            if target < matrix[Row][m]:
-                r = r - 1
-            elif target > matrix[Row][m]:
-                l = l + 1
+            elif target < matrix[mid][0]:
+                bot = mid - 1
             else:
+                top = top + 1
+
+        left, right = 0, len(matrix[row]) - 1
+
+        while left <= right:
+            mid = (left + right) // 2
+
+            if target == matrix[row][mid]:
                 return True
+            elif target < matrix[row][mid]:
+                right = mid - 1
+            else:
+                left = mid + 1
 
         return False
 ```
