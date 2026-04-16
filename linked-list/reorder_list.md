@@ -37,10 +37,12 @@ class Solution:
         first, second = head, prev
 
         while second:
-            temp1, temp2 = first.next, second.next
+            temp_first = first.next
+            temp_second = second.next
             first.next = second
-            second.next = temp1
-            first, second = temp1, temp2
+            second.next = temp_first
+            first = temp_first
+            second = temp_second
 ```
 
 ## Complexity
