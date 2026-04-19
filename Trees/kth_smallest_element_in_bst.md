@@ -15,8 +15,8 @@
 ```python
 class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
-        stack = []
         cur = root
+        stack = []
         n = 0
 
         while cur or stack:
