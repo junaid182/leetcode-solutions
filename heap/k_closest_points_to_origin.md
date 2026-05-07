@@ -18,7 +18,7 @@ class Solution:
         minheap = []
         for x, y in points:
             dist = (x ** 2) + (y ** 2)
-            minheap.append([dist, x, y])
+            minheap.append((dist, x, y))
         
         heapq.heapify(minheap)
         
