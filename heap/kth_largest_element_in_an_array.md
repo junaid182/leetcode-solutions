@@ -13,14 +13,15 @@
 ```python
 class Solution:
     def findKthLargest(self, nums: List[int], k: int) -> int:
-        minHeap = [-n for n in nums]
-        heapq.heapify(minHeap)
+        nums = [-n for n in nums]
+        heapq.heapify(nums)
 
-        while k > 1:
-            heapq.heappop(minHeap)
+        res = 0
+        while k > 0:
+            res = heapq.heappop(nums)
             k -= 1
         
-        return -minHeap[0]
+        return -res
 ```
 
 ## Complexity
