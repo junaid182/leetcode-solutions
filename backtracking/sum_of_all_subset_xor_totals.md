@@ -13,17 +13,13 @@
 ```python
 class Solution:
     def subsetXORSum(self, nums: List[int]) -> int:
-        n = len(nums)
 
-        def dfs(i, cur_xor):
-            if i == n:
-                return cur_xor
+        def dfs(i, total):
+            if i == len(nums):
+                return total
             
-            take = dfs(i+1, cur_xor ^ nums[i])
-            skip = dfs(i+1, cur_xor)
-
-            return take + skip
-
+            return dfs(i+1, total ^ nums[i]) + dfs(i+1, total)
+        
         return dfs(0, 0)
 ```
 
