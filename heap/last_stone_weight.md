@@ -22,11 +22,10 @@ class Solution:
             first = heapq.heappop(stones)
             second = heapq.heappop(stones)
 
-            if second > first:
+            if first != second:
                 heapq.heappush(stones, first - second)
-        
-        stones.append(0)
-        return abs(stones[0])
+
+        return abs(stones[0]) if stones else 0
 ```
 
 ## Complexity
