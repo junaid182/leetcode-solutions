@@ -22,9 +22,9 @@ class Solution:
             incoming[dst] += 1
             outgoing[src] += 1
         
-        for cur in range(1, n+1):
-            if incoming[cur] == n-1 and outgoing[cur] == 0:
-                return cur
+        for i in range(1, n+1):
+            if incoming[i] == n-1 and outgoing[i] == 0:
+                return i
         
         return -1
 ```
