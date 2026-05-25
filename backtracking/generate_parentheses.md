@@ -15,27 +15,25 @@ When both equal `n`, the combination is complete. This generates only valid stri
 ```python
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
-        
-        stack = []
+
         res = []
+        stack = []
 
         def backtrack(openN, closedN):
             if openN == closedN == n:
                 res.append("".join(stack))
-                return
             
             if openN < n:
                 stack.append("(")
-                backtrack(openN + 1, closedN)
+                backtrack(openN+1, closedN)
                 stack.pop()
             
             if closedN < openN:
                 stack.append(")")
-                backtrack(openN, closedN + 1)
+                backtrack(openN, closedN+1)
                 stack.pop()
         
         backtrack(0, 0)
-
         return res
 ```
 
