@@ -4,36 +4,41 @@
 
 ## Approach
 
-Backtracking over each digit's mapped characters. At each index `i`, try appending every letter mapped to `digits[i]` and recurse to the next digit. When the built string length equals the input length, record it.
-
-Note: if `digits` is empty, `backtracking(0, "")` hits the base case immediately and appends `""` — but since `res` starts empty and we never call the function when `digits` is empty... actually the function is always called, so an empty `digits` input returns `[""]`. LeetCode expects `[]` for empty input, so a guard `if not digits: return []` before calling `backtracking` would be safer.
+Backtracking over each digit's mapped characters. Maintain an outer `path` list. At each index `i`, try appending every letter mapped to `digits[i]`, recurse to the next digit, then pop (backtrack). When `i` reaches the end, join `path` and record it.
 
 ## Code
 
 ```python
 class Solution:
     def letterCombinations(self, digits: str) -> List[str]:
-        res = []
-        digitToChar = {
-            "2" : "abc",
-            "3" : "def",
-            "4" : "ghi",
-            "5" : "jkl",
-            "6" : "mno",
-            "7" : "pqrs",
-            "8" : "tuv",
-            "9" : "wxyz",
+
+        digitsToChar = {
+            "2": "abc",
+            "3": "def",
+            "4": "ghi",
+            "5": "jkl",
+            "6": "mno",
+            "7": "pqrs",
+            "8": "tuv",
+            "9": "wxyz"
         }
 
-        def backtracking(i, curStr):
-            if len(curStr) == len(digits):
-                res.append(curStr)
+        res = []
+        path = []
+
+        def backtrack(i):
+            if i == len(digits):
+                res.append("".join(path))
                 return
             
-            for c in digitToChar[digits[i]]:
-                backtracking(i+1, curStr+c)
+            letters = digitsToChar[digits[i]]
 
-        backtracking(0, "")
+            for letter in letters:
+                path.append(letter)
+                backtrack(i+1)
+                path.pop()
+
+        backtrack(0)
 
         return res
 ```
