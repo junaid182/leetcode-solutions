@@ -4,9 +4,11 @@
 
 ## Approach
 
-**Backtracking (DFS):** At each index, branch into two choices — include the element or skip it. When all elements are exhausted, record the current subset.
+Record the current `path` at every recursive call (not just at leaves), then iterate from `start` forward — appending each element, recursing, and popping. Advancing `start` to `i+1` ensures each element is only considered once per path and no duplicates are generated.
 
-**Why it works:** Every subset is visited exactly once via the include/skip binary decision tree. Each leaf corresponds to a unique subset of `nums`.
+**Why `path.copy()`:** Appending `path` directly would store a reference — all entries in `res` would reflect the same list as it mutates.
+
+**vs. binary include/exclude:** This iterative-style recursion is more natural when working with combinations or subsets with constraints (e.g. size limits), since the `for` loop makes it easy to add conditions.
 
 ## Code
 
@@ -14,21 +16,15 @@
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
         res = []
-
-        subset = []
-
-        def dfs(i):
-            if i == len(nums):
-                return res.append(subset.copy())
+        def backtracking(start, path):
+            res.append(path.copy())
             
-            subset.append(nums[i])
-            dfs(i+1)
+            for i in range(start, len(nums)):
+                path.append(nums[i])
+                backtracking(i+1, path)
+                path.pop()
 
-            subset.pop()
-            dfs(i+1)
-
-
-        dfs(0)
+        backtracking(0, [])
 
         return res
 ```
