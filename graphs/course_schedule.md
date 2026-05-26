@@ -4,36 +4,40 @@
 
 ## Approach
 
-Build an adjacency list of prerequisites. DFS each course to check for cycles. `crsVisit` tracks the current DFS path — if we revisit a node on the same path, there's a cycle. After confirming a course is completable, clear its prerequisites list so future DFS calls on it return immediately (memoization).
+Build an adjacency list of prerequisites. DFS each course to check for cycles. `path` tracks the current DFS path — if we revisit a node on the same path, there's a cycle. After confirming a course is completable, clear its prerequisites list so future DFS calls on it return immediately (memoization).
 
-**Why it works:** A cycle in the prerequisite graph means some course depends on itself transitively, making it impossible to complete. Clearing `preMap[crs]` after a successful traversal avoids redundant work.
+**Why it works:** A cycle in the prerequisite graph means some course depends on itself transitively, making it impossible to complete. Clearing `graph[crs]` after a successful traversal avoids redundant work.
 
 ## Code
 
 ```python
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        preMap = {i: [] for i in range(numCourses)}
-        for crs, pre in prerequisites:
-            preMap[crs].append(pre)
+        graph = defaultdict(list)
 
-        crsVisit = set()
+        for course, pre in prerequisites:
+            graph[course].append(pre)
+        
+        path = set()
         def dfs(crs):
-            if crs in crsVisit:
+            if crs in path:
                 return False
-            if preMap[crs] == []:
+            if graph[crs] == []:
                 return True
             
-            crsVisit.add(crs)
-            for pre in preMap[crs]:
-                if not dfs(pre): return False
-            crsVisit.remove(crs)
-            preMap[crs] = []
+            path.add(crs)
+            for course in graph[crs]:
+                if not dfs(course):
+                    return False
+            
+            path.remove(crs)
+            graph[crs] = []
 
             return True
-        
+
         for crs in range(numCourses):
-            if not dfs(crs): return False
+            if not dfs(crs):
+                return False
         
         return True
 ```
