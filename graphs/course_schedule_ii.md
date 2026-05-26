@@ -4,7 +4,7 @@
 
 ## Approach
 
-Same cycle-detection DFS as Course Schedule, with two sets instead of one: `cycle` tracks the current DFS path (for cycle detection), `visit` marks fully processed courses. When a course's entire prerequisite chain resolves without a cycle, add it to `output` — this produces a valid topological order.
+Same cycle-detection DFS as Course Schedule, with two sets: `path` tracks the current DFS path (for cycle detection), `visited` marks fully processed courses. When a course's entire prerequisite chain resolves without a cycle, append it to `res` — this produces a valid topological order. Clearing `graph[crs]` after processing avoids redundant work.
 
 **Why it works:** Appending after all prerequisites are resolved ensures dependencies come before dependents. If a cycle is detected, return `[]`.
 
@@ -13,32 +13,39 @@ Same cycle-detection DFS as Course Schedule, with two sets instead of one: `cycl
 ```python
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-        preMap = {i: [] for i in range(numCourses)}
-        for crs, pre in prerequisites:
-            preMap[crs].append(pre)
+        res = []
+        graph = defaultdict(list)
 
-        output = []
-
-        visit, cycle = set(), set()
+        for course, pre in prerequisites:
+            graph[course].append(pre)
+        
+        path = set()
+        visited = set()
         def dfs(crs):
-            if crs in cycle:
+            if crs in path:
                 return False
-            if crs in visit:
+            
+            if crs in visited:
                 return True
             
-            cycle.add(crs)
-            for pre in preMap[crs]:
-                if not dfs(pre): return False
-            cycle.remove(crs)
-            visit.add(crs)
-            output.append(crs)
+            path.add(crs)
+            for course in graph[crs]:
+                if not dfs(course):
+                    return False
+            
+            path.remove(crs)
+            visited.add(crs)
+            graph[crs] = []
+
+            res.append(crs)
 
             return True
-        
+
         for crs in range(numCourses):
-            if not dfs(crs): return []
+            if not dfs(crs):
+                return []
         
-        return output
+        return res
 ```
 
 ## Complexity
