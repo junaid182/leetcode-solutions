@@ -4,34 +4,32 @@
 
 ## Approach
 
-DFS with two choices at each index: include `candidates[i]` again (staying at `i`) or skip to the next candidate (`i+1`). Accumulate the running total and record the combination when it hits the target.
+Iterative start-index backtracking. At each call, iterate from `start` forward — appending the candidate, recursing with the same `i` (allowing reuse), and popping. Record the path when `total == target`, prune when it exceeds.
 
-**Why it works:** Allowing re-use by not advancing `i` on the "include" branch covers all repetitions. Advancing `i` on the "skip" branch ensures no duplicate combinations (each candidate is only reconsidered going left-to-right).
+**Why it works:** Passing `i` (not `i+1`) on the recursive call allows a candidate to be reused. Iterating from `start` forward prevents duplicate combinations.
 
 ## Code
 
 ```python
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
-
         res = []
 
-        subset = []
-        def dfs(i, total):
+        def backtrack(start, path, total):
             if total == target:
-                res.append(subset.copy())
+                res.append(path.copy())
                 return
             
-            if total > target or i == len(candidates):
+            if total > target:
                 return
             
-            subset.append(candidates[i])
-            dfs(i, candidates[i]+total)
+            for i in range(start, len(candidates)):
+                path.append(candidates[i])
+                backtrack(i, path, total + candidates[i])
+                path.pop()
 
-            subset.pop()
-            dfs(i+1, total)
+        backtrack(0, [], 0)
 
-        dfs(0, 0)
         return res
 ```
 
