@@ -4,13 +4,7 @@
 
 ## Approach
 
-Work backwards through the `cost` array. For each step `i`, the cheapest path forward is whichever is cheaper — taking one step or two steps. Update in-place:
-
-```
-cost[i] = min(cost[i] + cost[i+1], cost[i] + cost[i+2])
-```
-
-Start from the third-to-last index and move left, so `cost[i+1]` and `cost[i+2]` are already resolved when we process `i`. The last two elements are never updated — they already represent the cost of stepping to the top from those positions. At the end, return the smaller of `cost[0]` and `cost[1]`.
+Seed `prev2 = cost[0]` and `prev1 = cost[1]`. Iterate forward — at each step the minimum total cost is `cost[i] + min(prev2, prev1)`. Shift the window and return the smaller of the final two values.
 
 ## Code
 
@@ -18,10 +12,16 @@ Start from the third-to-last index and move left, so `cost[i+1]` and `cost[i+2]`
 class Solution:
     def minCostClimbingStairs(self, cost: List[int]) -> int:
 
-        for i in range(len(cost)-3, -1, -1):
-            cost[i] = min(cost[i] + cost[i+1], cost[i] + cost[i+2])
+        prev2 = cost[0]
+        prev1 = cost[1]
 
-        return min(cost[0], cost[1])
+        for i in range(2, len(cost)):
+            cur = cost[i] + min(prev2, prev1)
+
+            prev2 = prev1
+            prev1 = cur
+        
+        return min(prev1, prev2)
 ```
 
 ## Complexity
