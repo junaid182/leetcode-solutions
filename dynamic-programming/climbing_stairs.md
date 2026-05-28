@@ -6,24 +6,25 @@
 
 At each step, you can arrive from either one step below or two steps below. This makes the number of ways to reach step `n` equal to `ways(n-1) + ways(n-2)` — identical to Fibonacci.
 
-Instead of storing the full DP array, keep only the last two values (`one` and `two`), seeded at `2` and `1` (the answers for steps 2 and 1). Iterate backwards from `n-2` down to `1`, accumulating forward: `one` becomes `one + two`, and `two` takes the old `one`. After the loop, `one` holds the answer.
+Keep two variables: `prev1 = 1` (ways for n=1) and `prev2 = 2` (ways for n=2). Iterate forward from 3 to n, computing `cur = prev1 + prev2` and shifting the window. Return `prev2`.
 
 ## Code
 
 ```python
 class Solution:
     def climbStairs(self, n: int) -> int:
-        one, two = 2, 1
 
         if n < 2:
             return n
-
-        for i in range(n-2, 0, -1):
-            temp = one
-            one = one + two
-            two = temp
         
-        return one
+        prev1 = 1
+        prev2 = 2
+
+        for i in range(3, n+1):
+            cur = prev1 + prev2
+            prev1 = prev2
+            prev2 = cur
+        return prev2
 ```
 
 ## Complexity
