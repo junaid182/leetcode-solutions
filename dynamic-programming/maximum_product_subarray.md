@@ -20,11 +20,10 @@ class Solution:
         for n in nums:
             if n == 0:
                 curMax, curMin = 1, 1
-                continue
             
-            tempCurMax = n * curMax
-            curMax = max(n * curMax, n * curMin, n)
-            curMin = min(tempCurMax, n * curMin, n)
+            tempCurMax = curMax
+            curMax = max(curMax * n, curMin * n, n)
+            curMin = min(tempCurMax * n, curMin * n, n)
             res = max(res, curMax)
         
         return res
