@@ -4,25 +4,27 @@
 
 ## Approach
 
-Rolling DP with two variables: `rob1` (max loot up to two houses ago) and `rob2` (max loot up to the previous house). For each house, the best choice is either rob it (`rob1 + n`) or skip it (`rob2`). Shift the window forward each iteration.
-
-```
-[rob1, rob2, n, ...]
-```
+Seed `prev2 = nums[0]` and `prev1 = max(nums[0], nums[1])` — the best loot from the first one or two houses. For each subsequent house, take the better of robbing it (`prev2 + nums[i]`) or skipping it (`prev1`). Shift the window forward.
 
 ## Code
 
 ```python
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        rob1, rob2 = 0, 0
 
-        for n in nums:
-            temp = max(rob1 + n, rob2)
-            rob1 = rob2
-            rob2 = temp
+        if len(nums) == 1:
+            return nums[0]
+
+        prev2 = nums[0]
+        prev1 = max(nums[0], nums[1])
+
+        for i in range(2, len(nums)):
+            cur = max(prev2+nums[i], prev1)
+
+            prev2 = prev1
+            prev1 = cur
         
-        return rob2
+        return max(prev1, prev2)
 ```
 
 ## Complexity
