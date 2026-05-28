@@ -4,9 +4,9 @@
 
 ## Approach
 
-Bottom-up DP from the end of the string. `dp[i]` is `True` if `s[i:]` can be segmented using `wordDict`. Base case: `dp[len(s)] = True` (empty suffix is always valid).
+Forward DP where `dp[i]` is `True` if `s[:i]` can be segmented using `wordDict`. Base case: `dp[0] = True` (empty prefix is always valid). Convert `wordDict` to a set for O(1) lookups.
 
-For each index `i`, try every word — if it matches `s[i:i+len(w)]` and `dp[i+len(w)]` is `True`, mark `dp[i] = True` and break early.
+For each endpoint `i`, check all start positions `j < i` — if `dp[j]` is `True` and `s[j:i]` is in the word set, mark `dp[i] = True` and break early.
 
 ## Code
 
@@ -14,16 +14,15 @@ For each index `i`, try every word — if it matches `s[i:i+len(w)]` and `dp[i+l
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
         dp = [False] * (len(s)+1)
-        dp[len(s)] = True
+        dp[0] = True
+        wordDict = set(wordDict)
 
-        for i in range(len(s)-1, -1, -1):
-            for w in wordDict:
-                if (i + len(w)) <= len(s) and s[i:i+len(w)] == w:
-                    dp[i] = dp[i+len(w)]
-                if dp[i]:
+        for i in range(1, len(s)+1):
+            for j in range(len(s[:i])):
+                if dp[j] and s[j:i] in wordDict:
+                    dp[i] = True
                     break
-        
-        return dp[0]
+        return dp[len(s)]
 ```
 
 ## Complexity
