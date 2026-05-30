@@ -31,6 +31,7 @@ class Solution:
                     return False
             
             path.remove(crs)
+
             graph[crs] = []
 
             return True
