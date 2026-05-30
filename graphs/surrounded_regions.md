@@ -15,12 +15,16 @@ class Solution:
     def solve(self, board: List[List[str]]) -> None:
         rows, cols = len(board), len(board[0])
 
+        visited = set()
+
         def dfs(r, c):
-            if r < 0 or r >= rows or c < 0 or c >= cols or board[r][c] == "X" or board[r][c] == "S":
+            if (r, c) in visited:
+                return
+            if r < 0 or r >= rows or c < 0 or c >= cols or board[r][c] != "O":
                 return
             
+            visited.add((r,c))
             board[r][c] = "S"
-
             dfs(r+1, c)
             dfs(r-1, c)
             dfs(r, c+1)
