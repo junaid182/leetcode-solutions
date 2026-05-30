@@ -4,9 +4,9 @@
 
 ## Approach
 
-Iterative backtracking with a `used` set. At each call, try every number not yet in `used` — append it, mark it used, recurse, then pop and unmark (backtrack). Record the path when it reaches full length.
+Iterative backtracking with a `used` set tracking indices. At each call, try every index not yet in `used` — mark it, append the value, recurse, then pop and unmark (backtrack). Record the path when it reaches full length.
 
-**Why it works:** The `used` set prevents reusing the same element in one permutation. Trying all unused elements at every position generates all n! arrangements.
+**Why track indices instead of values:** Tracking `i` (not `nums[i]`) works correctly even if duplicate values exist in the input.
 
 ## Code
 
@@ -14,6 +14,7 @@ Iterative backtracking with a `used` set. At each call, try every number not yet
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
         res = []
+
         used = set()
 
         def backtrack(path):
@@ -22,16 +23,14 @@ class Solution:
                 return
             
             for i in range(len(nums)):
-                if nums[i] in used:
+                if i in used:
                     continue
-                
+
+                used.add(i)
                 path.append(nums[i])
-                used.add(nums[i])
-
                 backtrack(path)
-
                 path.pop()
-                used.remove(nums[i])
+                used.remove(i)
 
         backtrack([])
 
