@@ -17,21 +17,22 @@ class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
         res = []
 
-        def backtrack(path, open_count, closed_count):
-            if open_count == closed_count == n:
+        def backtrack(openP, closedP, path):
+            if openP == closedP == n:
                 res.append("".join(path))
-            
-            if open_count < n:
-                path.append("(")
-                backtrack(path, open_count+1, closed_count)
+                return
+
+            if openP < n:
+                path.append('(')
+                backtrack(openP+1, closedP, path)
                 path.pop()
             
-            if closed_count < open_count:
-                path.append(")")
-                backtrack(path, open_count, closed_count+1)
+            if openP > closedP:
+                path.append(')')
+                backtrack(openP, closedP+1, path)
                 path.pop()
 
-        backtrack([], 0, 0)
+        backtrack(0, 0, [])
 
         return res
 ```
