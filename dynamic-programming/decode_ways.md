@@ -4,12 +4,11 @@
 
 ## Approach
 
-Backward DP with two rolling variables. `next1 = dp[i+1]` (ways from one step ahead) and `next2 = dp[i+2]` (ways from two steps ahead). Base case: `next1 = 1` (empty suffix has one decoding), `next2 = 0`.
+Forward DP where `dp[i]` = number of ways to decode `s[:i]`. Base case: `dp[0] = 1` (empty prefix has one decoding).
 
 For each position `i`:
-- If `s[i] != '0'`: single-digit decode is valid → `cur += next1`
-- If `s[i:i+2]` forms a valid two-digit number (10–26): `cur += next2`
-- Shift: `next2 = next1`, `next1 = cur`
+- Single-char decode: if `s[i-1] != '0'` → `dp[i] += dp[i-1]`
+- Two-char decode: if `s[i-2:i]` forms a valid number (10–19, or 20–26) → `dp[i] += dp[i-2]`
 
 ## Code
 
@@ -17,26 +16,21 @@ For each position `i`:
 class Solution:
     def numDecodings(self, s: str) -> int:
         n = len(s)
+        dp = [0] * (n+1)
+        dp[0] = 1
 
-        next1 = 1 # dp[n]
-        next2 = 0 # dp[n+1]
+        for i in range(1, n+1):
+            
+            if s[i-1] != "0":
+                dp[i] += dp[i-1]
 
-        for i in range(n-1, -1, -1):
-            cur = 0
-
-            if s[i] != "0":
-                cur = next1
-
-                if i+1 < n and (s[i] == "1" or (s[i] == "2" and s[i+1] in "0123456")):
-                    cur += next2
-                
-            next2 = next1
-            next1 = cur
+            if i >= 2 and (s[i-2] == "1" or (s[i-2] == "2" and s[i-1] <= '6')):
+                dp[i] += dp[i-2]
         
-        return next1
+        return dp[n]
 ```
 
 ## Complexity
 
-Time: O(n) — single backward pass  
-Space: O(1) — two variables
+Time: O(n) — single forward pass  
+Space: O(n) — dp array
