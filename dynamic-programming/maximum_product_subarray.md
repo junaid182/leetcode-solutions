@@ -14,17 +14,17 @@ Track both `curMax` and `curMin` at each position — a negative number can flip
 class Solution:
     def maxProduct(self, nums: List[int]) -> int:
         res = max(nums)
-
-        curMax, curMin = 1, 1
+        maxCur, minCur = 1, 1
 
         for n in nums:
             if n == 0:
-                curMax, curMin = 1, 1
+                maxCur, minCur = 1, 1
             
-            tempCurMax = curMax
-            curMax = max(curMax * n, curMin * n, n)
-            curMin = min(tempCurMax * n, curMin * n, n)
-            res = max(res, curMax)
+            tempMaxCur = n * maxCur
+            maxCur = max(n * maxCur, n * minCur, n)
+            minCur = min(tempMaxCur, n * minCur, n)
+
+            res = max(res, maxCur)
         
         return res
 ```
