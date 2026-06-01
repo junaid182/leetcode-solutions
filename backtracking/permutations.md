@@ -4,9 +4,7 @@
 
 ## Approach
 
-Iterative backtracking with a `used` set tracking indices. At each call, try every index not yet in `used` — mark it, append the value, recurse, then pop and unmark (backtrack). Record the path when it reaches full length.
-
-**Why track indices instead of values:** Tracking `i` (not `nums[i]`) works correctly even if duplicate values exist in the input.
+Iterative backtracking with a `visited` set tracking values. At each call, try every value not yet in `visited` — mark it, append it, recurse, then remove and unmark (backtrack). Record the path when it reaches full length.
 
 ## Code
 
@@ -15,22 +13,21 @@ class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
         res = []
 
-        used = set()
-
+        visited = set()
         def backtrack(path):
             if len(path) == len(nums):
                 res.append(path.copy())
                 return
             
             for i in range(len(nums)):
-                if i in used:
+                if nums[i] in visited:
                     continue
-
-                used.add(i)
+                
+                visited.add(nums[i])
                 path.append(nums[i])
                 backtrack(path)
-                path.pop()
-                used.remove(i)
+                path.remove(nums[i])
+                visited.remove(nums[i])
 
         backtrack([])
 
