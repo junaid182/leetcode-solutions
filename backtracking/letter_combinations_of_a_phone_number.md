@@ -24,21 +24,18 @@ class Solution:
         }
 
         res = []
-        path = []
 
-        def backtrack(i):
-            if i == len(digits):
+        def backtrack(start, path):
+            if start == len(digits):
                 res.append("".join(path))
                 return
             
-            letters = digitsToChar[digits[i]]
-
-            for letter in letters:
-                path.append(letter)
-                backtrack(i+1)
+            for ch in digitsToChar[digits[start]]:
+                path.append(ch)
+                backtrack(start+1, path)
                 path.pop()
 
-        backtrack(0)
+        backtrack(0, [])
 
         return res
 ```
