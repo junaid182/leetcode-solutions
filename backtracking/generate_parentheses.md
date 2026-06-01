@@ -27,8 +27,8 @@ class Solution:
                 backtrack(openP+1, closedP, path)
                 path.pop()
             
-            if openP > closedP:
-                path.append(')')
+            if closedP < openP:
+                path.append(")")
                 backtrack(openP, closedP+1, path)
                 path.pop()
 
