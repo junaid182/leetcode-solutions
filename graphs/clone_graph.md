@@ -12,21 +12,20 @@ DFS with a hashmap (`oldToNew`) mapping each original node to its clone. Before 
 class Solution:
     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
 
-        oldToNew = {}
+        if not node:
+            return None
+
+        graph = {}
 
         def dfs(node):
+            if node in graph:
+                return graph[node]
 
-            if not node:
-                return
-
-            if node in oldToNew:
-                return oldToNew[node]
-            
             copy = Node(node.val)
-            oldToNew[node] = copy
+            graph[node] = copy
 
-            for neighbor in node.neighbors:
-                copy.neighbors.append(dfs(neighbor))
+            for nei in node.neighbors:
+                copy.neighbors.append(dfs(nei))
             
             return copy
 
