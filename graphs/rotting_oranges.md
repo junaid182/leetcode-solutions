@@ -14,31 +14,39 @@ Multi-source BFS starting from all initially rotten oranges simultaneously. Each
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
         rows, cols = len(grid), len(grid[0])
-        queue = deque()
         minutes, fresh = 0, 0
+        queue = deque()
 
-        for r in range(len(grid)):
-            for c in range(len(grid[0])):
-                if grid[r][c] == 2:
-                    queue.append((r, c))
-                elif grid[r][c] == 1:
+        for r in range(rows):
+            for c in range(cols):
+                if grid[r][c] == 1:
                     fresh += 1
+                elif grid[r][c] == 2:
+                    queue.append((r, c))
         
         if fresh == 0:
             return 0
         
-        directions = [[1,0], [-1, 0], [0, 1], [0, -1]]
-
+        visited = set()
         while queue:
             for i in range(len(queue)):
                 r, c = queue.popleft()
+                visited.add((r, c))
+
+                directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
 
                 for dr, dc in directions:
-                    nr, nc = r + dr, c + dc
-                    if (0 <= nr < rows) and (0 <= nc < cols) and grid[nr][nc] == 1:
+                    nr = r + dr
+                    nc = c + dc
+
+                    if nr < 0 or nr >= rows or nc < 0 or nc >= cols or grid[nr][nc] != 1 or (nr, nc) in visited:
+                        continue
+
+                    if grid[nr][nc] == 1:
                         grid[nr][nc] = 2
+                        queue.append((nr, nc))
                         fresh -= 1
-                        queue.append((nr,nc))
+
             minutes += 1
         
         return minutes - 1 if fresh == 0 else -1
