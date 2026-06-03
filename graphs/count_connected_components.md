@@ -11,29 +11,35 @@ Build an undirected adjacency list. Iterate over all nodes — each unvisited no
 ```python
 class Solution:
     def countComponents(self, n: int, edges: List[List[int]]) -> int:
-        adjMap = {i: [] for i in range(n)}
+        graph = defaultdict(list)
 
-        for a, b in edges:
-            adjMap[a].append(b)
-            adjMap[b].append(a)
+        for v1, v2 in edges:
+            graph[v1].append(v2)
+            graph[v2].append(v1)
         
-        visit = set()
-        def dfs(node):
-            if node in visit:
+        path = set()
+        visited = set()
+
+        def dfs(v):
+            if v in path:
                 return
+            
+            if v in visited:
+                return
+            
+            path.add(v)
+            for ver in graph[v]:
+                dfs(ver)
+            path.remove(v)
+            visited.add(v)
 
-            visit.add(node)
+        components = 0
+        for v in range(n):
+            if v not in visited:
+                dfs(v)
+                components += 1
 
-            for n in adjMap[node]:
-                dfs(n)
-
-        component = 0
-        for i in range(n):
-            if i not in visit:
-                component += 1
-                dfs(i)
-        
-        return component
+        return components
 ```
 
 ## Complexity
