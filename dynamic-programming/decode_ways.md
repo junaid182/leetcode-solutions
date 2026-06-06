@@ -24,7 +24,7 @@ class Solution:
             if s[i-1] != "0":
                 dp[i] += dp[i-1]
 
-            if i >= 2 and (s[i-2] == "1" or (s[i-2] == "2" and s[i-1] <= '6')):
+            if i>=2 and (s[i-2] == "1" or (s[i-2] == "2" and s[i-1] in "0123456")):
                 dp[i] += dp[i-2]
         
         return dp[n]
