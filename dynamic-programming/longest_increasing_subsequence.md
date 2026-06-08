@@ -4,19 +4,19 @@
 
 ## Approach
 
-Bottom-up DP from right to left. `dp[i]` is the length of the longest increasing subsequence starting at index `i`. Each position looks ahead at all `j > i` — if `nums[i] < nums[j]`, then `nums[i]` can extend the subsequence at `j`, so `dp[i] = max(dp[i], 1 + dp[j])`. Every position starts at `1` (just itself).
+Bottom-up DP from left to right. `dp[i]` is the length of the longest increasing subsequence ending at index `i`. For each `i`, look back at all `j < i` — if `nums[i] > nums[j]`, then `nums[i]` can extend the subsequence ending at `j`, so `dp[i] = max(dp[i], 1 + dp[j])`. Every position starts at `1` (just itself).
 
 ## Code
 
 ```python
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
-        dp = [1] * len(nums)
+        dp = [1] * (len(nums)+1)
 
-        for i in range(len(nums)-1, -1, -1):
-            for j in range(i+1, len(nums)):
-                if nums[i] < nums[j]:
-                    dp[i] = max(dp[i], 1+dp[j])
+        for i in range(1, len(nums)):
+            for j in range(i):
+                if nums[i] > nums[j]:
+                    dp[i] = max(dp[i], 1 + dp[j])
         
         return max(dp)
 ```
