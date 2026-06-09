@@ -16,14 +16,14 @@
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
 
-        numsHashmap = {}
+        hashMap = {}
 
         for i, n in enumerate(nums):
-            second_number = target - n
-            if second_number in numsHashmap:
-                return numsHashmap[second_number], i
+            diff = target - n
+            if diff in hashMap:
+                return [hashMap[diff], i]
             else:
-                numsHashmap[n] = i
+                hashMap[n] = i
 ```
 
 ## Complexity
