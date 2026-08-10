@@ -19,11 +19,9 @@ class Solution:
         hashMap = {}
 
         for i, n in enumerate(nums):
-            diff = target - n
-            if diff in hashMap:
-                return [hashMap[diff], i]
-            else:
-                hashMap[n] = i
+            if (target - n) in hashMap:
+                return [hashMap[target-n], i]
+            hashMap[n] = i
 ```
 
 ## Complexity
