@@ -24,11 +24,11 @@ class Solution:
                 count = 1
 
                 while cur + 1 in numsSet:
-                    cur += 1
                     count += 1
-
+                    cur += 1
+                
                 res = max(res, count)
-
+        
         return res
 ```
 
