@@ -18,9 +18,9 @@ class Solution:
         res = []
         
         prefix = 1
-        for n in nums:
+        for i in range(len(nums)):
             res.append(prefix)
-            prefix = prefix * n
+            prefix = prefix * nums[i]
         
         postfix = 1
         for i in range(len(nums)-1, -1, -1):
