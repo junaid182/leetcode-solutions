@@ -15,23 +15,22 @@
 ```python
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
+        sHashMap = {}
+        tHashMap = {}
 
         if len(s) != len(t):
             return False
 
-        sMap = {}
-        tMap = {}
-
         for c in s:
-            sMap[c] = sMap.get(c, 0) + 1
-
+            sHashMap[c] = sHashMap.get(c, 0) + 1
+        
         for c in t:
-            tMap[c] = tMap.get(c, 0) + 1
-
-        for key in sMap:
-            if sMap[key] != tMap.get(key, 0):
+            tHashMap[c] = tHashMap.get(c, 0) + 1
+        
+        for c in sHashMap:
+            if sHashMap[c] != tHashMap.get(c, 0):
                 return False
-
+        
         return True
 ```
 
