@@ -15,13 +15,15 @@
 ```python
 class Solution:
     def evalRPN(self, tokens: List[str]) -> int:
-        operators = {'+', '-', '*', '/'}
         stack = []
+        operatorsSet = {'+', '-', '*', '/'}
 
         for t in tokens:
-            if t in operators:
+            if t in operatorsSet:
                 a = stack.pop()
                 b = stack.pop()
+
+                res = 0
                 if t == '+':
                     res = b + a
                 elif t == '-':
@@ -29,11 +31,12 @@ class Solution:
                 elif t == '*':
                     res = b * a
                 else:
-                    res = int(b / a)
-                stack.append(res)
+                    res = b / a
+                
+                stack.append(int(res))
             else:
                 stack.append(int(t))
-
+        
         return stack[-1]
 ```
 
