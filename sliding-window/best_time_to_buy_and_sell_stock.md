@@ -15,15 +15,15 @@
 ```python
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        L = 0
+        l = 0
         maxProfit = 0
 
-        for R in range(len(prices)):
-            maxProfit = max(maxProfit, prices[R] - prices[L])
+        for r in range(len(prices)):
+            maxProfit = max(maxProfit, prices[r] - prices[l])
 
-            if prices[R] < prices[L]:
-                L = R
-
+            if prices[r] < prices[l]:
+                l = r
+        
         return maxProfit
 ```
 
