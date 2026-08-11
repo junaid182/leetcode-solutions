@@ -16,18 +16,16 @@
 class Solution:
     def isValid(self, s: str) -> bool:
         stack = []
-        paranMap = {')': '(', '}': '{', ']': '['}
+        paranHash = { ')':'(', '}':'{' , ']':'[' }
 
         for c in s:
-            if c in paranMap:
-                if stack and stack[-1] == paranMap[c]:
-                    stack.pop()
-                else:
+            if c in paranHash:
+                if len(stack) == 0 or stack.pop() != paranHash[c]:
                     return False
             else:
                 stack.append(c)
-
-        return not stack
+        
+        return True if len(stack) == 0 else False
 ```
 
 ## Complexity
