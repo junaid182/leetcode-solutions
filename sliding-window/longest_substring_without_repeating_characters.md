@@ -13,17 +13,18 @@
 ```python
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        i = 0
-        subStr = set()
+        l = 0
+        hashSet = set()
         res = 0
 
-        for j in range(len(s)):
-            while s[j] in subStr:
-                subStr.remove(s[i])
-                i += 1
-            subStr.add(s[j])
-            res = max(res, j - i + 1)
-
+        for r in range(len(s)):
+            while s[r] in hashSet:
+                hashSet.remove(s[l])
+                l += 1
+            
+            hashSet.add(s[r])
+            res = max(res, r - l + 1)
+        
         return res
 ```
 
