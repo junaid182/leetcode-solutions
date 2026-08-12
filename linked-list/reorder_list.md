@@ -23,26 +23,29 @@ class Solution:
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
-
+        
         second = slow.next
         slow.next = None
 
         prev = None
-        while second:
-            temp = second.next
-            second.next = prev
-            prev = second
-            second = temp
+        cur = second
 
-        first, second = head, prev
+        while cur:
+            temp = cur.next
+            cur.next = prev
+            prev = cur
+            cur = temp
+        
+        first = head
+        second = prev
 
         while second:
-            temp_first = first.next
-            temp_second = second.next
+            first_temp = first.next
+            second_temp = second.next
             first.next = second
-            second.next = temp_first
-            first = temp_first
-            second = temp_second
+            second.next = first_temp
+            first = first_temp
+            second = second_temp
 ```
 
 ## Complexity
