@@ -21,11 +21,11 @@ class Solution:
 
         for i in range(n):
             second = second.next
-
+        
         while second:
             first = first.next
             second = second.next
-
+        
         first.next = first.next.next
 
         return dummy.next
