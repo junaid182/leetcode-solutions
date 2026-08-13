@@ -18,13 +18,14 @@ class Solution:
         res = True
 
         def dfs(cur):
+
             if not cur:
                 return 0
-
+            
             left = dfs(cur.left)
             right = dfs(cur.right)
 
-            if abs(right - left) > 1:
+            if abs(left - right) > 1:
                 nonlocal res
                 res = False
 
