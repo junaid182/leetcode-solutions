@@ -23,8 +23,8 @@ class Solution:
             second = heapq.heappop(stones)
 
             if first != second:
-                heapq.heappush(stones, first - second)
-
+                heapq.heappush(stones, first-second)
+        
         return abs(stones[0]) if stones else 0
 ```
 
