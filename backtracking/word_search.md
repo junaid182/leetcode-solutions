@@ -17,21 +17,22 @@ class Solution:
 
         visited = set()
         def backtrack(r, c, i):
-            if i == len(word):
+            if len(word) == i:
                 return True
             
             if (r, c) in visited:
                 return False
-
+            
             if r < 0 or r >= rows or c < 0 or c >= cols or board[r][c] != word[i]:
                 return False
             
-            visited.add((r, c))
-            res = ( backtrack(r+1, c, i+1) 
-                    or backtrack(r-1, c, i+1)
-                    or backtrack(r, c+1, i+1)
-                    or backtrack(r, c-1, i+1))
-            visited.remove((r, c))
+            visited.add((r,c))
+            res = ( backtrack(r+1, c, i+1) or
+                    backtrack(r-1, c, i+1) or
+                    backtrack(r, c+1, i+1) or
+                    backtrack(r, c-1, i+1)
+                )
+            visited.remove((r,c))
             
             return res
 
