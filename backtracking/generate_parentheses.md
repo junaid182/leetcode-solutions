@@ -23,7 +23,7 @@ class Solution:
                 return
 
             if openP < n:
-                path.append('(')
+                path.append("(")
                 backtrack(openP+1, closedP, path)
                 path.pop()
             
