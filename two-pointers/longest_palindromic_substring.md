@@ -11,25 +11,27 @@ Expand around center for every index. Each position is tried twice — once as t
 ```python
 class Solution:
     def longestPalindrome(self, s: str) -> str:
-
         res = ""
         resLen = 0
 
-        def substrPalindrome(l, r):
+        def checkLongestPalindrome(l, r):
             nonlocal res, resLen
             while l >= 0 and r < len(s) and s[l] == s[r]:
                 if r - l + 1 > resLen:
                     res = s[l:r+1]
                     resLen = r - l + 1
+                
                 l -= 1
                 r += 1
 
         for i in range(len(s)):
+            # check for odd numbers
             l, r = i, i
-            substrPalindrome(l, r)
+            checkLongestPalindrome(l, r)
 
-            l, r = i, i+1
-            substrPalindrome(l, r)
+            #check for even numbers
+            l, r = i, i + 1
+            checkLongestPalindrome(l, r)
         
         return res
 ```
