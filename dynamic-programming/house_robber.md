@@ -11,7 +11,6 @@ Seed `prev2 = nums[0]` and `prev1 = max(nums[0], nums[1])` — the best loot fro
 ```python
 class Solution:
     def rob(self, nums: List[int]) -> int:
-
         if len(nums) <= 2:
             return max(nums)
 
@@ -19,8 +18,7 @@ class Solution:
         prev1 = max(nums[0], nums[1])
 
         for i in range(2, len(nums)):
-            cur = max(prev1, nums[i] + prev2)
-
+            cur = max(prev1, prev2+nums[i])
             prev2 = prev1
             prev1 = cur
         
