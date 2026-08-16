@@ -20,11 +20,12 @@ class Solution:
         
         res = []
         size, end = 0, 0
-        for i, c in enumerate(s):
-            size += 1
-            end = max(end, lastIndex[c])
 
-            if i == end:
+        for i, c in enumerate(s):
+            end = max(end, lastIndex[c])
+            size += 1
+
+            if end == i:
                 res.append(size)
                 size = 0
         
