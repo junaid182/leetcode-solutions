@@ -13,8 +13,8 @@ Sort starts and ends independently. Use two pointers to simulate a sweep line: i
 ```python
 class Solution:
     def minMeetingRooms(self, intervals: List[Interval]) -> int:
-        start = sorted(i.start for i in intervals)
-        end = sorted(i.end for i in intervals)
+        start = sorted([i.start for i in intervals])
+        end = sorted([i.end for i in intervals])
         
         res, count = 0, 0
         sI, eI = 0, 0
