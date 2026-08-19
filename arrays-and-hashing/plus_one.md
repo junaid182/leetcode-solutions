@@ -14,7 +14,7 @@ class Solution:
         digits = digits[::-1]
 
         carry = 1
-        index = 0 
+        index = 0
 
         while carry:
             if index < len(digits):
@@ -24,9 +24,8 @@ class Solution:
                 else:
                     digits[index] += 1
                     carry = 0
-            
             else:
-                digits.append(1)
+                digits.append(carry)
                 carry = 0
             index += 1
         
