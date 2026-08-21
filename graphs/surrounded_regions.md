@@ -13,31 +13,34 @@ Any `"O"` connected to the border cannot be captured. DFS from every border cell
 ```python
 class Solution:
     def solve(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
         rows, cols = len(board), len(board[0])
-
         visited = set()
 
         def dfs(r, c):
-            if (r, c) in visited:
-                return
-            if r < 0 or r >= rows or c < 0 or c >= cols or board[r][c] != "O":
+            if r < 0 or r >= rows or c < 0 or c >= cols or board[r][c] != "O" or (r, c) in visited:
                 return
             
-            visited.add((r,c))
+            visited.add((r, c))
             board[r][c] = "S"
             dfs(r+1, c)
             dfs(r-1, c)
             dfs(r, c+1)
             dfs(r, c-1)
 
+        # process only first and last col for boundary O's
         for r in range(rows):
             for c in [0, cols-1]:
                 dfs(r, c)
         
+        # process only first and last row for boundary O's
         for c in range(cols):
             for r in [0, rows-1]:
                 dfs(r, c)
         
+        # replace the actual characters after temporary character update on boundary connected O's
         for r in range(rows):
             for c in range(cols):
                 if board[r][c] == "O":
