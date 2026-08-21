@@ -11,10 +11,10 @@ Same structure as Number of Islands, but DFS returns the size of each island ins
 ```python
 class Solution:
     def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
-        rows, cols = len(grid), len(grid[0])
         res = 0
-
+        rows, cols = len(grid), len(grid[0])
         visited = set()
+
         def dfs(r, c):
             if (r, c) in visited:
                 return 0
@@ -23,17 +23,17 @@ class Solution:
                 return 0
             
             visited.add((r, c))
-            res = 1
+            res = 0
             res += dfs(r+1, c)
             res += dfs(r-1, c)
             res += dfs(r, c+1)
             res += dfs(r, c-1)
 
-            return res
+            return 1 + res
 
         for r in range(rows):
             for c in range(cols):
-                if grid[r][c] == 1:
+                if (r, c) not in visited and grid[r][c] == 1:
                     res = max(res, dfs(r, c))
         
         return res
