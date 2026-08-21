@@ -18,23 +18,23 @@ class Solution:
         for course, pre in prerequisites:
             graph[course].append(pre)
         
-        path = set()
+        visited = set()
         def dfs(crs):
-            if crs in path:
+            if crs in visited:
                 return False
+            
             if graph[crs] == []:
                 return True
             
-            path.add(crs)
+            visited.add(crs)
             for course in graph[crs]:
                 if not dfs(course):
                     return False
-            
-            path.remove(crs)
-
+            visited.remove(crs)
             graph[crs] = []
 
             return True
+
 
         for crs in range(numCourses):
             if not dfs(crs):
